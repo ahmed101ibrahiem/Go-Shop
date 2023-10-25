@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../core/widget/app_name_text.dart';
 import '../providers/theme_provider.dart';
+import '../widgets/custom_profile_list_tile.dart';
 
 
 class ProfileScreen extends StatelessWidget {
@@ -15,9 +17,12 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      appBar: AppBar(leading: Image.asset(AssetsManager.shoppingCart,
+      appBar: AppBar(leading: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Image.asset(AssetsManager.shoppingCart,
+        ),
       ),
-        title: const Text('Go Shop'),
+        title:const AppNameTextWidget(fontSize: 22.0),
       ),
       body:  SingleChildScrollView(
         child: Column(
@@ -52,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 7.0,),
+                  const SizedBox(width: 2.0,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -61,6 +66,7 @@ class ProfileScreen extends StatelessWidget {
                       const SubtitleTextWidget(label: 'ahmed.elsaba277@gmail.com'),
                     ],
                   ),
+                  const SizedBox(width: 4.0,),
                   InkWell(
                     onTap: (){},
                       child: const Icon(IconlyBold.edit)),
@@ -141,50 +147,25 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16,),
             // login button
-            Center(
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      30,
-                    ),
-                  ),
-                ),
-                onPressed: () {},
-                icon: const Icon(Icons.login),
-                label: const Text(
-                  "Login",
-                ),
+      Center(
+        child: ElevatedButton.icon(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                30,
               ),
             ),
+          ),
+          onPressed: () {},
+          icon: const Icon(Icons.login),
+          label: const Text(
+            "Login",
+          ),
+        ),)
           ],
         ),
       ),
-    );
-  }
-}
-
-class CustomProfileListTitle extends StatelessWidget {
-  const CustomProfileListTitle({
-    super.key,
-    required this.img,
-    required this.label,
-    required this.function
-  });
-
-  final String label;
-  final String img;
-  final Function function;
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: (){
-        function();
-      },
-      leading:  Image.asset(img, height: 30,),
-      title:  SubtitleTextWidget(label: label,),
-      trailing: const Icon(IconlyLight.arrowRight2),
     );
   }
 }

@@ -1,0 +1,19 @@
+import 'package:e_comerce_app/core/widget/title_text.dart';
+import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+
+
+class AppNameTextWidget extends StatelessWidget {
+  const AppNameTextWidget({super.key,this.fontSize =30.0, this.label = 'Go Shop'});
+  final double fontSize;
+  final String label;
+  @override
+  Widget build(BuildContext context) {
+    return  Shimmer.fromColors(
+      period: const Duration(seconds: 16),
+        baseColor: Colors.purple,
+        highlightColor: Colors.red,
+        child: TitlesTextWidget( label: label,fontSize: fontSize,)
+    );
+  }
+}
