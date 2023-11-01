@@ -6,11 +6,11 @@ class TitlesTextWidget extends StatelessWidget {
     required this.label,
     this.fontSize = 20,
     this.color,
-    this.overflow,
+    this.overflow = TextOverflow.ellipsis,
     this.maxLines,
   }) : super(key: key);
 
-   TextOverflow? overflow;
+  final TextOverflow overflow;
   final String label;
   final double fontSize;
   final Color? color;

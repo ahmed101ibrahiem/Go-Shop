@@ -3,6 +3,7 @@ import '../core/services/assets_manager.dart';
 import '../core/widget/app_name_text.dart';
 import '../widgets/bag_empty_widget.dart';
 import '../widgets/cart_body.dart';
+import '../widgets/cart_bottom_checkout.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -26,10 +27,11 @@ class CartScreen extends StatelessWidget {
     child: Image.asset(AssetsManager.shoppingCart,
     ),
     )),
+      bottomSheet: CartBottomCheckout(),
       body: ListView.builder(
         itemCount: 15,
         itemBuilder: (context, index) {
-        return CartBody();
+        return const CartBody();
       },),
     );
   }

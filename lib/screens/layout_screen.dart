@@ -24,7 +24,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   ];
   @override
   void initState() {
-    pageController = PageController(initialPage: 3);
+    pageController = PageController();
     super.initState();
   }
   @override
@@ -58,7 +58,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
             selectedIcon: Icon(IconlyBold.search),
           ),
           NavigationDestination(
-            icon: Icon(IconlyLight.bag2),
+            icon: Badge(
+              backgroundColor: Colors.blue,
+              label: Text('6'),
+                child: Icon(IconlyLight.bag2)),
             label: 'Cart',
             selectedIcon: Icon(IconlyBold.bag2),
           ),

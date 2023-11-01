@@ -1,10 +1,86 @@
+import 'dart:developer';
+
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 
+import '../core/services/assets_manager.dart';
+import '../core/widget/title_text.dart';
+import '../widgets/search_cart_widget.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  late TextEditingController searchTextController;
+
+  @override
+  void initState() {
+    searchTextController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    searchTextController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: TitlesTextWidget(label: "Store product"),
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(AssetsManager.shoppingCart),
+          ),
+        ),
+        body: Column(
+          children: [
+            const SizedBox(height: 16.0,),
+            TextField(
+              controller: searchTextController,
+              decoration: InputDecoration(
+                filled: true,
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    searchTextController.clear();
+                    FocusScope.of(context).unfocus();
+                  },
+                  child: const Icon(
+                    Icons.clear,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+              onChanged: (value) {},
+              onSubmitted: (value) {
+                log(searchTextController.text);
+              },
+            ),
+            const SizedBox(
+              height: 15.0,
+            ),
+            Expanded(
+                child: DynamicHeightGridView(
+              itemCount: 200,
+              crossAxisCount: 2,
+              builder: (context, index) {
+                return const SearchCartWidget();
+              },
+            ))
+          ],
+        ),
+      ),
+    );
   }
 }
