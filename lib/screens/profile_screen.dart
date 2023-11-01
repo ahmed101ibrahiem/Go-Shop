@@ -1,10 +1,13 @@
 import 'package:e_comerce_app/core/services/assets_manager.dart';
 import 'package:e_comerce_app/core/widget/subtitle_text.dart';
 import 'package:e_comerce_app/core/widget/title_text.dart';
+import 'package:e_comerce_app/screens/viewed_recently.dart';
+import 'package:e_comerce_app/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../core/services/my_app_method.dart';
 import '../core/widget/app_name_text.dart';
 import '../providers/theme_provider.dart';
 import '../widgets/custom_profile_list_tile.dart';
@@ -90,12 +93,22 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   CustomProfileListTitle(
                     label: 'Wishlist',
-                    function: (){},
+                    function: () async {
+                      await Navigator.pushNamed(
+                        context,
+                        WishlistScreen.routName,
+                      );
+                    },
                     img: AssetsManager.wishlistSvg,
                   ),
                   CustomProfileListTitle(
                     label: 'Viewed recently',
-                    function: (){},
+                    function:  () async {
+                      await Navigator.pushNamed(
+                        context,
+                        ViewedRecentlyScreen.routName,
+                      );
+                    },
                     img: AssetsManager.recent,
                   ),
                   CustomProfileListTitle(
@@ -157,7 +170,13 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          onPressed: () {},
+          onPressed:  () async {
+            MyAppMethods.showErrorORWarningDialog(
+                context: context,
+                subtitle: "Are you sure?",
+                fct: () {},
+                isError: false);
+          },
           icon: const Icon(Icons.login),
           label: const Text(
             "Login",

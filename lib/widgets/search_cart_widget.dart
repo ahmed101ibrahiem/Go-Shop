@@ -3,7 +3,9 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
+import '../core/widget/custom_fav_widget.dart';
 import '../core/widget/subtitle_text.dart';
+import '../screens/details_screen.dart';
 
 class SearchCartWidget extends StatelessWidget {
   const SearchCartWidget({super.key});
@@ -15,7 +17,8 @@ class SearchCartWidget extends StatelessWidget {
       padding: const EdgeInsets.all(3.0),
       child: GestureDetector(
         onTap: (){
-          /// navigate to product screen
+          /// navigate to product scree
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailsScreen(),));
         },
         child: Column(
           children: [
@@ -30,45 +33,56 @@ class SearchCartWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8.0,),
-            Row(
-              children: [
-              Flexible(
-                flex: 5,
-                  child: TitlesTextWidget(label: 'Nike Air Force'*5,maxLines: 2,),),
-                Flexible(
-                child: InkWell(
-                  onTap: (){},
-                    child: const Icon(IconlyLight.heart)),
-              ),
-            ],),
-            const SizedBox(height: 8.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                 const Flexible(
-                  flex: 3,
-                  child: SubtitleTextWidget(label: "166.5\$"),
-                ),
-                Flexible(
-                  child: Material(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.lightBlue,
-                    child: InkWell(
-                      splashColor: Colors.red,
-                      borderRadius: BorderRadius.circular(8.0),
-                      onTap: () {},
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.add_shopping_cart_rounded,size: 16,),
-                      ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 2.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                    Flexible(
+                      flex: 4,
+                        child: TitlesTextWidget(label: 'Nike Air Force'*5,maxLines: 2,),),
+                      const Flexible(
+                          flex: 2,
+                      child: CustomFavoriteWidget(size: 24.0,)
                     ),
+                  ],),
+                  const SizedBox(height: 8.0,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Flexible(
+                        flex: 3,
+                        child: SubtitleTextWidget(label: "166.5\$"),
+                      ),
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.lightBlue,
+                            child: InkWell(
+                              splashColor: Colors.red,
+                              borderRadius: BorderRadius.circular(8.0),
+                              onTap: () {},
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(Icons.add_shopping_cart_rounded,size: 16,),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+
           ],
         ),
       ),

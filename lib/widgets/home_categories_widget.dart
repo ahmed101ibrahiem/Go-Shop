@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
+import '../core/widget/custom_fav_widget.dart';
 import '../core/widget/subtitle_text.dart';
 import '../core/widget/title_text.dart';
 
@@ -53,10 +54,7 @@ class LatestArrivalCardWidget extends StatelessWidget {
                           color: Colors.green,
 
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(IconlyLight.heart,),
-                        ),
+                        CustomFavoriteWidget(),
                       ],
                     ),
                   )
