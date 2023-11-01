@@ -11,6 +11,7 @@ import '../core/services/my_app_method.dart';
 import '../core/widget/app_name_text.dart';
 import '../providers/theme_provider.dart';
 import '../widgets/custom_profile_list_tile.dart';
+import 'auth/login.dart';
 
 
 class ProfileScreen extends StatelessWidget {
@@ -174,7 +175,18 @@ class ProfileScreen extends StatelessWidget {
             MyAppMethods.showErrorORWarningDialog(
                 context: context,
                 subtitle: "Are you sure?",
-                fct: () {},
+                fct: () async {
+                  await Navigator.pushNamed(
+                    context,
+                    LoginScreen.routName,
+                  );
+                  // await MyAppMethods.showErrorORWarningDialog(
+                  //     context: context,
+                  //     subtitle: "Are you sure?",
+                  //     fct: () async {
+                  //     },
+                  //     isError: false);
+                },
                 isError: false);
           },
           icon: const Icon(Icons.login),

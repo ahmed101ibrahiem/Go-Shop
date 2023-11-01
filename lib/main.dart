@@ -1,4 +1,5 @@
 import 'package:e_comerce_app/providers/theme_provider.dart';
+import 'package:e_comerce_app/screens/auth/forgot_password.dart';
 import 'package:e_comerce_app/screens/auth/login.dart';
 import 'package:e_comerce_app/screens/auth/register.dart';
 import 'package:e_comerce_app/screens/details_screen.dart';
@@ -47,6 +48,8 @@ class MyApp extends StatelessWidget {
             RegisterScreen.routName: (context) => const RegisterScreen(),
             LoginScreen.routName: (context) => const LoginScreen(),
             OrdersScreenFree.routeName: (context) => const OrdersScreenFree(),
+            ForgotPasswordScreen.routeName: (context) =>
+            const ForgotPasswordScreen(),
           },
         );
       }),
