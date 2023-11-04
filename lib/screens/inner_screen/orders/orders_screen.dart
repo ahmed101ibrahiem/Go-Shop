@@ -24,12 +24,15 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
           ),
         ),
         body: isEmptyOrders
-            ?BagEmptyWidget(
-                imgPath: AssetsManager.orderBag,
-                title: "No orders has been placed yet",
-                subTitle:  "",
-                mediumTitle: '',
-                buttonText: "Shop now")
+            ?Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: BagEmptyWidget(
+                  imgPath: AssetsManager.orderBag,
+                  title: "No orders has been placed yet",
+                  subTitle:  "",
+                  mediumTitle: '',
+                  buttonText: "Shop now"),
+            )
             : ListView.separated(
                 itemCount: 15,
                 itemBuilder: (ctx, index) {

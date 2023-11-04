@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:e_comerce_app/core/consts/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -34,11 +35,11 @@ class PickImageWidget extends StatelessWidget {
           top: 0,
           right: 0,
           child: Material(
-            borderRadius: BorderRadius.circular(16.0),
-            color: Colors.lightBlue,
+            borderRadius: BorderRadius.circular(10.0),
+            color: AppColors.lightGreen,
             child: InkWell(
               splashColor: Colors.red,
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(10.0),
               onTap: () {
                 function();
               },
@@ -46,7 +47,7 @@ class PickImageWidget extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Icon(
                   Icons.add_shopping_cart_rounded,
-                  size: 20,
+                  size: 16,
                   color: Colors.white,
                 ),
               ),

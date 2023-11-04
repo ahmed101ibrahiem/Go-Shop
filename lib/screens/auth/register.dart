@@ -1,3 +1,4 @@
+import 'package:e_comerce_app/core/consts/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,7 +12,6 @@ import '../../widgets/auth/pick_image_widget.dart';
 class RegisterScreen extends StatefulWidget {
   static const routName = '/RegisterScreen';
   const RegisterScreen({super.key});
-
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
@@ -64,7 +64,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       MyAppMethods.showErrorORWarningDialog(
           context: context,
           subtitle: "Make sure to pick up an image",
-          fct: () {});
+          fct: () {
+            Navigator.pop(context);
+          });
     }
     if (isValid) {}
   }
@@ -103,13 +105,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 60.0,
+                  height: 48.0,
                 ),
                 const AppNameTextWidget(
                   fontSize: 30,
                 ),
                 const SizedBox(
-                  height: 16.0,
+                  height: 24.0,
                 ),
                  Align(
                   alignment: Alignment.centerLeft,
@@ -117,12 +119,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TitlesTextWidget(label: "Welcome"),
-                      SubtitleTextWidget(label: "Your welcome message")
+                      const SizedBox(height: 8.0,),
+                      const SubtitleTextWidget(
+                        fontSize: 16.0,
+                        label: "Register in go shop app to simplify your business and sales management.",
+                      )
                     ],
                   ),
                 ),
                 const SizedBox(
-                  height: 16.0,
+                  height: 32.0,
                 ),
                 SizedBox(
                   height: size.width * 0.3,
@@ -135,7 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 16.0,
+                  height: 40.0,
                 ),
                 Form(
                   key: _formKey,
@@ -252,14 +258,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       const SizedBox(
-                        height: 16.0,
+                        height: 40.0,
                       ),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.all(12),
-                            // backgroundColor: Colors.red,
+                             backgroundColor: AppColors.lightGreen,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
                                 10,

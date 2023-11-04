@@ -1,8 +1,10 @@
 import 'package:e_comerce_app/core/services/assets_manager.dart';
 import 'package:e_comerce_app/core/widget/subtitle_text.dart';
 import 'package:e_comerce_app/core/widget/title_text.dart';
-import 'package:e_comerce_app/screens/viewed_recently.dart';
-import 'package:e_comerce_app/screens/wishlist.dart';
+import 'package:e_comerce_app/screens/inner_screen/orders/orders_screen.dart';
+import 'package:e_comerce_app/screens/inner_screen/privacy_policy_screen.dart';
+import 'package:e_comerce_app/screens/inner_screen/viewed_recently.dart';
+import 'package:e_comerce_app/screens/inner_screen/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +18,6 @@ import 'auth/login.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -47,15 +48,15 @@ class ProfileScreen extends StatelessWidget {
                child: Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CircleAvatar(
+                   CircleAvatar(
                     backgroundColor: Colors.black,
-                    radius: 32.0,
+                    radius: MediaQuery.sizeOf(context).width *0.088,
                     child: CircleAvatar(
-                      radius: 29,
+                      radius: MediaQuery.sizeOf(context).width *0.078,
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
-                        radius: 27.0,
-                        backgroundImage:NetworkImage(
+                        radius: MediaQuery.sizeOf(context).width *0.07,
+                        backgroundImage:const NetworkImage(
                           'https://image.lexica.art/full_jpg/7515495b-982d-44d2-9931-5a8bbbf27532',
                         ),
                       ),
@@ -67,13 +68,15 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       TitlesTextWidget(label:'Ahmed Ibrahim'),
                       const SizedBox(height: 10.0,),
-                      const SubtitleTextWidget(label: 'ahmed.elsaba277@gmail.com'),
+                      const SubtitleTextWidget(label: 'ahmed.elsaba277@gmail.com',),
                     ],
                   ),
                   const SizedBox(width: 4.0,),
                   InkWell(
                     onTap: (){},
-                      child: const Icon(IconlyBold.edit)),
+                      child:  Icon(IconlyBold.edit,
+                        size: MediaQuery.sizeOf(context).width *0.07,
+                      ),),
                 ],
             ),
              ),
@@ -89,7 +92,9 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   CustomProfileListTitle(
                     label: 'All Order',
-                    function: (){},
+                    function: (){
+                      Navigator.pushNamed(context, OrdersScreenFree.routeName);
+                    },
                     img: AssetsManager.orderSvg,
                   ),
                   CustomProfileListTitle(
@@ -154,7 +159,9 @@ class ProfileScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: CustomProfileListTitle(img: AssetsManager.privacy,
-                  label: 'Privacy & Policy', function: (){}),
+                  label: 'Privacy & Policy', function: (){
+                Navigator.pushNamed(context, PrivacyPolicyScreen.routName);
+                  }),
             ),
             const Divider(
               thickness: 1,

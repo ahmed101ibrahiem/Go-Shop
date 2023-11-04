@@ -1,13 +1,17 @@
+import 'package:e_comerce_app/core/consts/app_colors.dart';
 import 'package:e_comerce_app/core/consts/app_constants.dart';
 import 'package:e_comerce_app/core/widget/subtitle_text.dart';
 import 'package:e_comerce_app/core/widget/title_text.dart';
+import 'package:e_comerce_app/providers/cart_provider.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
-import '../core/services/assets_manager.dart';
-import '../core/widget/app_name_text.dart';
-import '../core/widget/custom_fav_widget.dart';
+import '../../core/services/assets_manager.dart';
+import '../../core/widget/app_name_text.dart';
+import '../../core/widget/custom_fav_widget.dart';
+import '../../providers/product_provider.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   static const routName = '/ProductDetails';
@@ -19,6 +23,12 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
+    final cartProvider = Provider.of<CartProvider>(context);
+    final productProvider =
+    Provider.of<ProductProvider>(context, listen: false);
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
+    final getCurrProduct = productProvider.findByProdId(productId);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -27,14 +37,14 @@ class ProductDetailsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Badge(
-              backgroundColor: Colors.red[800],
+              backgroundColor: AppColors.lightGreen,
               alignment: Alignment.topLeft,
               offset: const Offset(-4,-4),
-              label: const Text('5'),
+              label:  Text('${cartProvider.getCartItem.length}'),
               child: Container(
-                padding: const EdgeInsets.all(6.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 8),
                 decoration: BoxDecoration(
-                  color: Colors.blue[200],
+                  color: Colors.blue[400],
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child:  const Icon(IconlyLight.bag2,color: Colors.black,size: 18.0,),
@@ -46,13 +56,13 @@ class ProductDetailsScreen extends StatelessWidget {
           onPressed: () {
             Navigator.canPop(context)?Navigator.of(context).pop():null;
           },
-          icon: const Icon(IconlyLight.arrowLeft2, color: Colors.black,),
+          icon: const Icon(IconlyLight.arrowLeft2,size: 24.0,),
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            FancyShimmerImage(imageUrl: AppConstants.productImageUrl,
+            FancyShimmerImage(imageUrl: getCurrProduct!.productImage,
               boxFit: BoxFit.contain,
               height: size.height*0.38,
               width: double.infinity,
@@ -67,12 +77,12 @@ class ProductDetailsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Flexible(child: Text(
-                         'Title '*16,
+                         getCurrProduct.productTitle,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,fontSize: 20.0),
                       ),),
                       const SizedBox(width: 16.0,),
-                      const SubtitleTextWidget(label: "166.5\$",
+                       SubtitleTextWidget(label: "${getCurrProduct.productPrice}\$",
                         color: Colors.blue,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,),
@@ -84,34 +94,42 @@ class ProductDetailsScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                      CustomFavoriteWidget(),
+                      const CustomFavoriteWidget(size: 28,),
                         const SizedBox(width: 10.0,),
                         Expanded(child: SizedBox(
-                          height: kBottomNavigationBarHeight -10,
+                          height: kBottomNavigationBarHeight -16.0,
                           child: ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.lightBlue,
+                              backgroundColor: Colors.lightGreen,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0),
                               )
                             ),
-                              onPressed: (){},
-                              icon: const Icon(Icons.add_shopping_cart),
-                              label: const Text('Add to cart'),),
+                              onPressed: (){
+                              cartProvider.addProductToCart(productId: productId);
+                              },
+                              icon:  Icon(cartProvider.isProductInCart(productId: productId)?
+                              Icons.done_all:Icons.add_shopping_cart),
+                              label:  Text(cartProvider.isProductInCart(productId: productId)?'In Cart':'Add to cart'),),
 
                         ))
                     ],),
                   ),
                   SizedBox(height: 16.0,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TitlesTextWidget(label: 'About this item'),
-                      SubtitleTextWidget(label: 'In Phones')
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TitlesTextWidget(label: 'About this item'),
+                        const SubtitleTextWidget(label: 'In Phones')
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 24.0,),
-                  SubtitleTextWidget(label: 'describtion'*15)
+                  const SizedBox(height: 24.0,),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SubtitleTextWidget(label: getCurrProduct.productDescription))
                 ],
               ),
             )

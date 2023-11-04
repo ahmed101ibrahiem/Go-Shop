@@ -43,7 +43,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                         child: TitlesTextWidget(
                           label: 'productTitle',
                           maxLines: 2,
-                          fontSize: 15,
+                          fontSize: 16.0,
                         ),
                       ),
                       IconButton(
@@ -51,7 +51,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                           icon: const Icon(
                             Icons.clear,
                             color: Colors.red,
-                            size: 22,
+                            size: 20,
                           )),
                     ],
                   ),
@@ -64,7 +64,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                       const Flexible(
                         child: SubtitleTextWidget(
                           label: "11.99 \$",
-                          fontSize: 15,
+                          fontSize: 14,
                           color: Colors.blue,
                         ),
                       ),

@@ -1,3 +1,4 @@
+import 'package:e_comerce_app/core/consts/app_colors.dart';
 import 'package:e_comerce_app/screens/auth/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -140,8 +141,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () {},
-                          child: const SubtitleTextWidget(
+                          child:  SubtitleTextWidget(
                             label: "Forgot password?",
+                            color: Colors.green[700],
                             textDecoration: TextDecoration.underline,
                             fontStyle: FontStyle.italic,
                           ),
@@ -155,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.all(12),
-                            // backgroundColor: Colors.red,
+                             backgroundColor: AppColors.lightGreen,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
                                 10,
@@ -175,13 +177,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 16.0,
+                        height: 24.0,
                       ),
                       SubtitleTextWidget(
                         label: "OR connect using".toUpperCase(),
-                      ),
-                      const SizedBox(
-                        height: 16.0,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -191,9 +190,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               const Expanded(
-                                flex: 2,
+                                flex: 3,
                                 child: SizedBox(
-                                  height: kBottomNavigationBarHeight,
+                                  height: kBottomNavigationBarHeight -10,
                                   child: FittedBox(
                                     child: GoogleButton(),
                                   ),
@@ -203,12 +202,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: 8,
                               ),
                               Expanded(
+                                flex: 1,
                                 child: SizedBox(
-                                  height: kBottomNavigationBarHeight,
+                                  height: kBottomNavigationBarHeight - 10,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
+
                                       padding: const EdgeInsets.all(12),
-                                      // backgroundColor:
+                                       backgroundColor:AppColors.lightGreen,
                                       // Theme.of(context).colorScheme.background,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(
@@ -248,6 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: const SubtitleTextWidget(
                               label: "Sign up",
+                              color:AppColors.lightGreen,
                               textDecoration: TextDecoration.underline,
                               fontStyle: FontStyle.italic,
                             ),

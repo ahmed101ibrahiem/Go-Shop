@@ -2,14 +2,11 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:e_comerce_app/core/consts/app_constants.dart';
 import 'package:e_comerce_app/core/widget/subtitle_text.dart';
 import 'package:e_comerce_app/core/widget/title_text.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:e_comerce_app/providers/product_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-
 import '../core/services/assets_manager.dart';
 import '../core/widget/app_name_text.dart';
-import '../providers/theme_provider.dart';
 import '../widgets/home_categories_widget.dart';
 import '../widgets/home_category_widget.dart';
 
@@ -23,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
@@ -59,10 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     )),
               ),
               const SizedBox(
-                height: 16.0,
+                height: 24.0,
               ),
               TitlesTextWidget(
-                label: 'Latest arrival',
+                label: 'Latest arrival',fontSize: 22.0,
               ),
               const SizedBox(
                 height: 16.0,
@@ -73,16 +71,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   itemCount: 10,
                   itemBuilder: (context, index) {
-                    return LatestArrivalCardWidget();
+                    return ChangeNotifierProvider.value(
+                      value: productProvider.getProducts[index],
+                        child: const LatestArrivalCardWidget());
                   },
                 ),
               ),
               const SizedBox(
-                height: 32.0,
+                height: 24.0,
               ),
               TitlesTextWidget(
                 label: 'Categories',
-                fontSize: 24.0,
+                fontSize: 22.0,
               ),
               const SizedBox(
                 height: 16.0,

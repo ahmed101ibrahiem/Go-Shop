@@ -1,24 +1,36 @@
 import 'package:e_comerce_app/core/widget/title_text.dart';
+import 'package:e_comerce_app/providers/cart_provider.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-
+import 'package:provider/provider.dart';
 import '../core/widget/custom_fav_widget.dart';
 import '../core/widget/subtitle_text.dart';
-import '../screens/details_screen.dart';
+import '../providers/product_provider.dart';
+import '../screens/inner_screen/details_screen.dart';
 
-class SearchCartWidget extends StatelessWidget {
-  const SearchCartWidget({super.key});
+class SearchCartWidget extends StatefulWidget {
+   SearchCartWidget({super.key,required this.productId});
 
+  final String productId;
+
+  @override
+  State<SearchCartWidget> createState() => _SearchCartWidgetState();
+}
+
+class _SearchCartWidgetState extends State<SearchCartWidget> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
+    final productProvider = Provider.of<ProductProvider>(context);
+    final getCurrProduct = productProvider.findByProdId(widget.productId);
+    final cartProvider = Provider.of<CartProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: GestureDetector(
         onTap: (){
           /// navigate to product scree
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailsScreen(),));
+          Navigator.pushNamed(context, ProductDetailsScreen.routName,arguments: getCurrProduct.productId);
         },
         child: Column(
           children: [
@@ -26,7 +38,7 @@ class SearchCartWidget extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(30.0),
               child: FancyShimmerImage(
-                imageUrl:
+                imageUrl: getCurrProduct!.productImage??
                 'https://i.ibb.co/8r1Ny2n/20-Nike-Air-Force-1-07.png',
                 width: double.infinity,
                 height: size.height * 0.22,
@@ -38,37 +50,41 @@ class SearchCartWidget extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                     Flexible(
-                      flex: 4,
-                        child: TitlesTextWidget(label: 'Nike Air Force'*5,maxLines: 2,),),
-                      const Flexible(
-                          flex: 2,
-                      child: CustomFavoriteWidget(size: 24.0,)
-                    ),
+                        child: TitlesTextWidget(
+                          label:getCurrProduct!.productTitle?? 'Nike Air Force'*5,
+                          maxLines: 2,
+                          fontSize: 17.0,
+                        ),),
+                      const CustomFavoriteWidget(size: 24.0,),
                   ],),
                   const SizedBox(height: 8.0,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Flexible(
-                        flex: 3,
-                        child: SubtitleTextWidget(label: "166.5\$"),
+                       Flexible(
+                        flex: 6,
+                        child: SubtitleTextWidget(label: getCurrProduct.productPrice??"166.5\$"),
                       ),
                       Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Material(
+                        flex: 2,
+                        child: Material(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: Colors.lightGreen,
+                          child: InkWell(
+                            splashColor: Colors.red,
                             borderRadius: BorderRadius.circular(8.0),
-                            color: Colors.lightBlue,
-                            child: InkWell(
-                              splashColor: Colors.red,
-                              borderRadius: BorderRadius.circular(8.0),
-                              onTap: () {},
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Icons.add_shopping_cart_rounded,size: 16,),
-                              ),
+                            onTap: () {
+                              cartProvider.addProductToCart(productId: getCurrProduct.productId);
+                            },
+                            child:  Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(child: Icon(cartProvider.isProductInCart(
+                                  productId:  getCurrProduct.productId)?Icons.check:
+                                Icons.add_shopping_cart_rounded,color: Colors.white,
+                                size: 18,)),
                             ),
                           ),
                         ),

@@ -1,9 +1,12 @@
-import 'package:e_comerce_app/screens/cart_screen.dart';
+import 'package:e_comerce_app/core/consts/app_colors.dart';
+import 'package:e_comerce_app/providers/cart_provider.dart';
+import 'package:e_comerce_app/screens/cart/cart_screen.dart';
 import 'package:e_comerce_app/screens/home_screen.dart';
 import 'package:e_comerce_app/screens/profile_screen.dart';
 import 'package:e_comerce_app/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
 
 class LayoutScreen extends StatefulWidget {
@@ -29,6 +32,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
     return  Scaffold(
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -46,26 +50,26 @@ class _LayoutScreenState extends State<LayoutScreen> {
           });
           pageController.jumpToPage(currentScreen);
         },
-        destinations: const [
-          NavigationDestination(
+        destinations:  [
+          const NavigationDestination(
               icon: Icon(IconlyLight.home),
               label: 'Home',
             selectedIcon: Icon(IconlyBold.home),
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Icon(IconlyLight.search),
             label: 'Search',
             selectedIcon: Icon(IconlyBold.search),
           ),
           NavigationDestination(
             icon: Badge(
-              backgroundColor: Colors.blue,
-              label: Text('6'),
-                child: Icon(IconlyLight.bag2)),
+              backgroundColor: AppColors.lightGreen,
+              label: Text('${cartProvider.getCartItem.length}'),
+                child: const Icon(IconlyLight.bag2)),
             label: 'Cart',
-            selectedIcon: Icon(IconlyBold.bag2),
+            selectedIcon: const Icon(IconlyBold.bag2),
           ),
-          NavigationDestination(
+          const NavigationDestination(
             icon: Icon(IconlyLight.profile),
             label: 'profile',
             selectedIcon: Icon(IconlyBold.profile),

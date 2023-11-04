@@ -3,17 +3,27 @@ import 'package:e_comerce_app/widgets/quntity_btm_sheet.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
-import '../core/widget/custom_fav_widget.dart';
-import '../core/widget/title_text.dart';
+import '../../core/widget/custom_fav_widget.dart';
+import '../../core/widget/title_text.dart';
+import '../../models/cart_model.dart';
+import '../../providers/cart_provider.dart';
+import '../../providers/product_provider.dart';
 
 class CartBody extends StatelessWidget {
   const CartBody({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartModelProvider = Provider.of<CartModel>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
+    final cartProvider= Provider.of<CartProvider>(context);
+    final getCurrProduct =
+    productProvider.findByProdId(cartModelProvider.productId);
     Size size = MediaQuery.of(context).size;
-    return FittedBox(
+    return getCurrProduct == null
+        ? const SizedBox.shrink():FittedBox(
       child: IntrinsicWidth(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -23,13 +33,13 @@ class CartBody extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 child: FancyShimmerImage(
                   imageUrl:
-                  'https://i.ibb.co/8r1Ny2n/20-Nike-Air-Force-1-07.png',
+                  getCurrProduct.productImage,
                   height: size.height * 0.2,
                   width: size.height * 0.2,
                 ),
               ),
               const SizedBox(
-                width: 10.0,
+                width: 8.0,
               ),
               IntrinsicWidth(
                 child: Column(
@@ -39,20 +49,23 @@ class CartBody extends StatelessWidget {
                         SizedBox(
                           width: size.width * 0.6,
                           child: TitlesTextWidget(
-                            label: "Title" * 10,
+                            label: getCurrProduct.productTitle,
                             maxLines: 2,
                           ),
                         ),
                         Column(
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                cartProvider.removeOneItem(productId: getCurrProduct.productId);
+                              },
                               icon: const Icon(
                                 Icons.clear,
                                 color: Colors.red,
+                                size: 25.0,
                               ),
                             ),
-                            const CustomFavoriteWidget()
+                            const CustomFavoriteWidget(size: 25,)
                           ],
                         ),
                       ],
@@ -60,8 +73,8 @@ class CartBody extends StatelessWidget {
                     Row(
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const SubtitleTextWidget(
-                          label: "16\$",
+                         SubtitleTextWidget(
+                          label: "${getCurrProduct.productPrice}\$",
                           fontSize: 20,
                           color: Colors.blue,
                         ),
@@ -85,11 +98,11 @@ class CartBody extends StatelessWidget {
                                 )
                               ),
                               context: context, builder: (context) {
-                              return const QuantityBottomSheetWidget();
+                              return  QuantityBottomSheetWidget(cartModel: cartModelProvider,);
                             },);
                           },
                           icon: const Icon(IconlyLight.arrowDown2),
-                          label: const Text("Qty: 6 "),
+                          label: Text("Qty: ${cartModelProvider.quantity} "),
                         ),
                       ],
                     )
